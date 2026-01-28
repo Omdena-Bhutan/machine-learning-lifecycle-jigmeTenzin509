@@ -1,0 +1,28 @@
+pandas 
+numpy
+scikit-learn
+seaborn
+matplotlib
+
+mlflow
+prefect
+prefect-dask
+
+# deployment
+streamlit
+
+# utilities
+joblib
+python-dotenv
+pyyaml
+
+#Validation of data
+great-expectations
+
+#Monitoring 
+evidently
+
+jupyter
+notebook
+ipykernel
+tqdm
