@@ -1,0 +1,13 @@
+```yaml
+train:
+  model_name: "distilbert-base-uncased"  # HuggingFace model
+  batch_size: 32
+  epochs: 3
+  learning_rate: 2e-5
+  max_length: 128
+  validation_split: 0.2
+
+data:
+  dataset_path: "data/raw/reviews.csv"
+  test_size: 0.2
+```

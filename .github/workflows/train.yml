@@ -1,0 +1,30 @@
+```yaml
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          dvc remote add -d myremote s3://my-bucket/dvc-storage
+      
+      - name: Pull data
+        run: dvc pull
+      
+      - name: Run training pipeline
+        run: dvc repro
+      
+      - name: Push metrics
+        run: dvc push
+```
