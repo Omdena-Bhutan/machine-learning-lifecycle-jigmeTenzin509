@@ -3,15 +3,30 @@ from src.inference import predict
 
 app = Flask(__name__)
 
-@app.route('/predict', methods=['POST'])
-def predict_endpoint():
-    # TODO: Get text from request
-    # TODO: Validate input
-    # TODO: Call predict() function
-    # TODO: Return JSON response with sentiment and confidence
-    pass
+from flask import Flask, request, jsonify
+from src.inference import predict
 
-@app.route('/health', methods=['GET'])
+app = Flask(__name__)
+
+
+@app.route("/predict", methods=["POST"])
+def predict_endpoint():
+    data = request.get_json()
+
+    if not data or "text" not in data:
+        return jsonify({"error": "Text field missing"}), 400
+
+    result = predict(data["text"])
+    return jsonify(result)
+
+
+@app.route("/health", methods=["GET"])
 def health():
-    # TODO: Return model status and version
-    pass
+    return jsonify({
+        "status": "ok",
+        "model": "distilbert sentiment"
+    })
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

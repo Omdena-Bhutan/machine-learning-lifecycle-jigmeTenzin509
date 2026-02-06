@@ -1,8 +1,14 @@
- FROM python:3.10-slim
+FROM python:3.10-slim
 
 WORKDIR /app
 
-# TODO: Copy requirements and install
-# TODO: Copy model and source code
-# TODO: Expose port 5000
-# TODO: Set entrypoint to run Flask app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ../models ./models
+COPY ../src ./src
+COPY api.py .
+
+EXPOSE 5000
+
+CMD ["python", "api.py"]
