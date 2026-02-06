@@ -1,0 +1,34 @@
+```yaml
+stages:
+  prepare:
+    cmd: python src/data_loader.py
+    deps:
+      - data/raw/reviews.csv
+      - src/data_loader.py
+    outs:
+      - data/processed/train.pkl
+      - data/processed/test.pkl
+
+  train:
+    cmd: python src/model.py
+    deps:
+      - data/processed/train.pkl
+      - src/model.py
+    params:
+      - train.model_name
+      - train.batch_size
+    outs:
+      - models/trained/model.pkl
+    metrics:
+      - metrics.json:
+          cache: false
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - models/trained/model.pkl
+      - data/processed/test.pkl
+    metrics:
+      - eval_metrics.json:
+          cache: false
+```
